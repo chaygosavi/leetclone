@@ -5,6 +5,7 @@ import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import React, { useState, useEffect } from "react";
 import { auth } from "@/firebase/firebase";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 type Props = {};
 
@@ -33,12 +34,22 @@ const Login = (props: Props) => {
       if (!newUser) return;
       router.push("/");
     } catch (error: any) {
-      alert(error.message);
+      toast.error(error.message, {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "dark",
+      });
     }
   };
 
   useEffect(() => {
-    if (error) alert(error.message);
+    if (error) {
+      toast.error(error.message, {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "dark",
+      });
+    }
   }, [error]);
   return (
     <form action="" className="space-y-6 px-6 py-4" onSubmit={handleLogin}>
